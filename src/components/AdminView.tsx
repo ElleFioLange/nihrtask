@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { selectAllForms, fetchForms } from "../redux/formsSlice";
-import { List, Select, Button } from "antd";
+import {
+  selectAllForms,
+  selectFormById,
+  fetchForms,
+} from "../redux/formsSlice";
+import { List, Select, Button, Typography } from "antd";
 import { ReloadOutlined, StepBackwardOutlined } from "@ant-design/icons";
+import ReportView from "./ReportView";
+
+const { Title } = Typography;
 
 const AdminView = () => {
   const dispatch = useAppDispatch();
@@ -11,8 +18,10 @@ const AdminView = () => {
   const formsStatus = useAppSelector((state) => state.status);
   const formsError = useAppSelector((state) => state.error);
 
-  const [curForm, setCurForm] = useState("");
+  const [curFormId, setCurFormId] = useState("");
   const [sortBy, setSortBy] = useState("date");
+
+  const curForm = useAppSelector((state) => selectFormById(state, curFormId));
 
   useEffect(() => {
     if (formsStatus === "idle") {
@@ -23,10 +32,13 @@ const AdminView = () => {
   if (curForm)
     return (
       <>
-        <Button onClick={() => setCurForm("")}>
+        <Title className="header" style={{ fontWeight: 700 }}>
+          Form View
+        </Title>
+        <Button onClick={() => setCurFormId("")} style={{ marginBottom: 25 }}>
           <StepBackwardOutlined />
         </Button>
-        <div>The current form id is {curForm}</div>
+        <ReportView form={curForm} />
       </>
     );
 
@@ -36,6 +48,9 @@ const AdminView = () => {
     case "succeeded":
       return (
         <>
+          <Title className="header" style={{ fontWeight: 700 }}>
+            Administrator View
+          </Title>
           <Select
             style={{
               width: "10vw",
@@ -77,7 +92,7 @@ const AdminView = () => {
                     title={
                       <span
                         style={{ cursor: "pointer" }}
-                        onClick={() => setCurForm(form.id)}
+                        onClick={() => setCurFormId(form.id)}
                       >{`${form.first_name} ${form.last_name}`}</span>
                     }
                     description={`${form.patient_id}`}

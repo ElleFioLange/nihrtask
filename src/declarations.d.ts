@@ -1,3 +1,8 @@
+// ID and Date are missing when the form is submitted, but luckily they aren't checked then
+// Date is added when the form is uploaded to firebase
+// ID is added when form is retrieved from firebase
+// Kind of hacky, but for the sake of time I'm not going to worry about it
+
 declare type TFormData = {
   id: string;
   first_name: string;
