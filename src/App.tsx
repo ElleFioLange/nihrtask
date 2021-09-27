@@ -35,7 +35,7 @@ function App() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const docRef = await addDoc(collection(db, "submitted-forms"), {
         ...values,
-        date: new Date().toDateString(),
+        date: new Date().toString(),
       });
       message.success("Success!");
       window.scrollTo({ top: 0 });

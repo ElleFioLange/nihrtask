@@ -12,6 +12,7 @@ const AdminView = () => {
   const formsError = useAppSelector((state) => state.error);
 
   const [curForm, setCurForm] = useState("");
+  const [sortBy, setSortBy] = useState("date");
 
   useEffect(() => {
     if (formsStatus === "idle") {
@@ -35,15 +36,41 @@ const AdminView = () => {
     case "succeeded":
       return (
         <>
+          <Select
+            style={{
+              width: "10vw",
+              maxWidth: 150,
+              minWidth: 50,
+              marginRight: 25,
+            }}
+            value={sortBy}
+            onChange={(value) => setSortBy(value)}
+          >
+            <Select.Option value="date">Date</Select.Option>
+            <Select.Option value="first_name">First Name</Select.Option>
+            <Select.Option value="last_name">Last Name</Select.Option>
+            <Select.Option value="patient_id">ID</Select.Option>
+          </Select>
           <Button onClick={() => dispatch(fetchForms())}>
             <ReloadOutlined />
           </Button>
-          <List>
+          <List style={{ marginTop: 25 }}>
             {forms
               .slice()
-              .sort((a, b) =>
-                Date.parse(a.date) > Date.parse(b.date) ? 1 : -1
-              )
+              .sort((a, b) => {
+                switch (sortBy) {
+                  case "date":
+                    return Date.parse(a.date) < Date.parse(b.date) ? 1 : -1;
+                  case "first_name":
+                    return a.first_name > b.first_name ? 1 : -1;
+                  case "last_name":
+                    return a.last_name > b.last_name ? 1 : -1;
+                  case "patient_id":
+                    return a.patient_id > b.patient_id ? 1 : -1;
+                  default:
+                    return 0;
+                }
+              })
               .map((form) => (
                 <List.Item>
                   <List.Item.Meta
