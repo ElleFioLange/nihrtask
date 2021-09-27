@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import * as firebase from "firebase";
+import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import FormView from "./components/FormView";
 import AdminView from "./components/AdminView";
@@ -17,7 +17,7 @@ const firebaseConfig = {
   appId: "1:943861323887:web:a50062eb52790c823a959a",
 };
 
-firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 const db = getFirestore();
 
 function App() {
