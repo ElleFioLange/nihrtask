@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import store from "./redux/store";
 import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import FormView from "./components/FormView";
 import AdminView from "./components/AdminView";
 import { Button, message } from "antd";
+import store from "./redux/store";
 import "./App.less";
 
 const firebaseConfig = {
@@ -30,17 +30,20 @@ function App() {
 
   // Callbacks for submitting the form or if there's an error
   // =============================================================
-  const onFinish = async (values: formData) => {
+  const onFinish = async (values: TFormData) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const docRef = await addDoc(collection(db, "submitted-forms"), {
         ...values,
-        date: new Date(),
+        date: new Date().toDateString(),
       });
       message.success("Success!");
+      window.scrollTo({ top: 0 });
+      return true;
     } catch (e) {
       console.error(e);
       message.error("Error uploading form, please try again");
+      return false;
     }
   };
 

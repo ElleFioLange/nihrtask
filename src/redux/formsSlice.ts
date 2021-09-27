@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
-const db = getFirestore();
-
 type FormState = {
-  forms: formData[];
+  forms: TFormData[];
   status: string;
   error: string | undefined;
 };
@@ -16,10 +14,11 @@ const initialState: FormState = {
 };
 
 export const fetchForms = createAsyncThunk("forms/fetchForms", async () => {
+  const db = getFirestore();
   const querySnapshot = await getDocs(collection(db, "submitted-forms"));
-  const data: formData[] = [];
+  const data: TFormData[] = [];
   querySnapshot.forEach((doc) =>
-    data.push({ ...doc.data(), id: doc.id } as formData)
+    data.push({ ...doc.data(), id: doc.id } as TFormData)
   );
   return data;
 });

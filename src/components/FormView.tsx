@@ -1,28 +1,35 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { Typography, Form, Radio, Button, Input } from "antd";
 import { questions } from "../constants/form-questions";
 
 const { Title, Paragraph } = Typography;
 
 type FormViewProps = {
-  onFinish: (values: formData) => void;
+  onFinish: (values: TFormData) => Promise<boolean>;
   onFinishFailed: (errorInfo: any) => void;
 };
 
-const FormView: FC<FormViewProps> = (props) => {
+const FormView: FC<FormViewProps> = ({ onFinish, onFinishFailed }) => {
+  const [form] = Form.useForm();
+
   return (
     <>
       <Title className="header" style={{ fontWeight: 700 }}>
         NIHR PTSD Checklist
       </Title>
       <Form
+        form={form}
         className="form"
         name="ptsd-checklist"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         autoComplete="off"
-        {...props}
+        onFinish={async (values) => {
+          const successUploading = await onFinish(values);
+          if (successUploading) form.resetFields();
+        }}
+        onFinishFailed={onFinishFailed}
       >
         <Paragraph>First name:</Paragraph>
         <Form.Item
@@ -38,7 +45,7 @@ const FormView: FC<FormViewProps> = (props) => {
         >
           <Input />
         </Form.Item>
-        <Paragraph>ID Number:</Paragraph>
+        <Paragraph>ID:</Paragraph>
         <Form.Item
           name="patient_id"
           rules={[{ required: true, message: "Your ID is required" }]}
@@ -46,7 +53,7 @@ const FormView: FC<FormViewProps> = (props) => {
           <Input />
         </Form.Item>
         {questions.map((question, idx) => (
-          <>
+          <React.Fragment key={idx}>
             <Paragraph>{question}</Paragraph>
             <Form.Item
               name={`question_${idx}`}
@@ -60,7 +67,7 @@ const FormView: FC<FormViewProps> = (props) => {
                 <Radio value={4}>4</Radio>
               </Radio.Group>
             </Form.Item>
-          </>
+          </React.Fragment>
         ))}
         <Form.Item>
           <Button type="primary" htmlType="submit" block>

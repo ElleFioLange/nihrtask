@@ -1,9 +1,9 @@
-declare type formData = {
+declare type TFormData = {
   id: string;
   first_name: string;
   last_name: string;
   patient_id: string;
-  date: Date;
+  date: string;
   question_0: 0 | 1 | 2 | 3 | 4;
   question_1: 0 | 1 | 2 | 3 | 4;
   question_2: 0 | 1 | 2 | 3 | 4;
