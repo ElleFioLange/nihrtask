@@ -53,9 +53,7 @@ const AdminView = () => {
           </Title>
           <Select
             style={{
-              width: "10vw",
-              maxWidth: 150,
-              minWidth: 50,
+              width: 100,
               marginRight: 25,
             }}
             value={sortBy}
