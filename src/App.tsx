@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { initializeApp } from "firebase/app";
+import * as firebase from "firebase";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import FormView from "./components/FormView";
 import AdminView from "./components/AdminView";
@@ -9,7 +9,7 @@ import store from "./redux/store";
 import "./App.less";
 
 const firebaseConfig = {
-  apiKey: "REPLACE_ME",
+  apiKey: "AIzaSyDFY1vAx2dkZ83tBmIcOf9hrV_76MAQ3JA",
   authDomain: "nihr-task.firebaseapp.com",
   projectId: "nihr-task",
   storageBucket: "nihr-task.appspot.com",
@@ -18,7 +18,7 @@ const firebaseConfig = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const app = initializeApp(firebaseConfig);
+firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
 const db = getFirestore();
 
 function App() {
