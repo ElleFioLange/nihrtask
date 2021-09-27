@@ -32,3 +32,6 @@ declare type TFormData = {
   question_18: QuestionAnswer;
   question_19: QuestionAnswer;
 };
+
+// This is needed for some reason
+declare module "firebase";
