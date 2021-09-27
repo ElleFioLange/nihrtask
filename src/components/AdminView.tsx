@@ -85,7 +85,9 @@ const AdminView = () => {
                 }
               })
               .map((form) => (
-                <List.Item>
+                <List.Item
+                  extra={<p>{new Date(form.date).toLocaleDateString()}</p>}
+                >
                   <List.Item.Meta
                     title={
                       <span

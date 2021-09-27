@@ -9,7 +9,7 @@ import store from "./redux/store";
 import "./App.less";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFY1vAx2dkZ83tBmIcOf9hrV_76MAQ3JA",
+  apiKey: "REPLACE_ME",
   authDomain: "nihr-task.firebaseapp.com",
   projectId: "nihr-task",
   storageBucket: "nihr-task.appspot.com",

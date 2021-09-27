@@ -6,7 +6,6 @@ import {
   PolarGrid,
   Legend,
   PolarAngleAxis,
-  PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
 import { questions } from "../constants/form-questions";
@@ -53,36 +52,43 @@ const ReportView: React.FC<ReportViewProps> = ({ form }) => {
   const chartData = [
     {
       category: "avoidance",
-      cur: avoidance,
-      prev: 6,
-      fullMark: 20,
+      cur: avoidance / 20,
+      prev: 6 / 20,
+      fullMark: 1,
     },
     {
       category: "intrusions",
-      cur: intrusions,
-      prev: 4,
-      fullMark: 8,
+      cur: intrusions / 8,
+      prev: 4 / 8,
+      fullMark: 1,
     },
     {
       category: "cognition",
-      cur: cognition,
-      prev: 19,
-      fullMark: 28,
+      cur: cognition / 28,
+      prev: 19 / 28,
+      fullMark: 1,
     },
     {
       category: "hypervigilance",
-      cur: hypervigilance,
-      prev: 9,
-      fullMark: 24,
+      cur: hypervigilance / 24,
+      prev: 9 / 24,
+      fullMark: 1,
     },
   ];
 
   return (
     <>
-      <Title level={2}>
+      <Title level={2} style={{ marginBottom: 0 }}>
         {form.first_name} {form.last_name}
       </Title>
-      <Title style={{ color: "rgb(62.4%, 62.4%, 62.4%)" }} level={4}>
+      <Title
+        style={{
+          color: "rgb(62.4%, 62.4%, 62.4%)",
+          marginTop: 0,
+          marginBottom: 35,
+        }}
+        level={4}
+      >
         {form.patient_id}
       </Title>
       <TextArea
@@ -97,11 +103,13 @@ const ReportView: React.FC<ReportViewProps> = ({ form }) => {
           width: "auto",
           display: "flex",
           justifyContent: "space-evenly",
+          flexWrap: "wrap",
+          margin: "35px 0",
         }}
       >
         <Image
           preview={{ visible: false }}
-          width={200}
+          height={400}
           src="https://thumbs.dreamstime.com/z/senior-doctor-laughing-to-camera-16276713.jpg"
           onClick={() => setPreview(true)}
         />
@@ -117,7 +125,7 @@ const ReportView: React.FC<ReportViewProps> = ({ form }) => {
             <Image src="https://en.pimg.jp/018/206/992/1/18206992.jpg" />
           </Image.PreviewGroup>
         </div>
-        <ResponsiveContainer width={400} height={250}>
+        <ResponsiveContainer width={650} height={400}>
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="category" />
@@ -125,15 +133,15 @@ const ReportView: React.FC<ReportViewProps> = ({ form }) => {
               name="Current"
               dataKey="cur"
               stroke="#f99000"
-              fill="#8884d8"
+              fill="#f99000"
               fillOpacity={0.6}
             />
             <Radar
               name="Previous"
               dataKey="prev"
               stroke="rgb(62.4%, 62.4%, 62.4%)"
-              fill="#82ca9d"
-              fillOpacity={0.6}
+              fill="rgb(62.4%, 62.4%, 62.4%)"
+              fillOpacity={0.2}
             />
             <Legend />
           </RadarChart>
