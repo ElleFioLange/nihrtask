@@ -1,7 +1,9 @@
 declare type formData = {
+  id: string;
   first_name: string;
   last_name: string;
-  id: string;
+  patient_id: string;
+  date: Date;
   question_0: 0 | 1 | 2 | 3 | 4;
   question_1: 0 | 1 | 2 | 3 | 4;
   question_2: 0 | 1 | 2 | 3 | 4;

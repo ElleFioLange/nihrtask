@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import NIHRForm from "./components/NIHRForm";
+import FormView from "./components/FormView";
+import AdminView from "./components/AdminView";
 import { Button, message } from "antd";
 import "./App.less";
 
@@ -26,11 +29,14 @@ function App() {
   });
 
   // Callbacks for submitting the form or if there's an error
-
-  const onFinish = async (values: any) => {
+  // =============================================================
+  const onFinish = async (values: formData) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const docRef = await addDoc(collection(db, "submitted-forms"), values);
+      const docRef = await addDoc(collection(db, "submitted-forms"), {
+        ...values,
+        date: new Date(),
+      });
       message.success("Success!");
     } catch (e) {
       console.error(e);
@@ -45,9 +51,10 @@ function App() {
   };
 
   const NIHRFormProps = { onFinish, onFinishFailed };
+  // =============================================================
 
   return (
-    <>
+    <Provider store={store}>
       <div className="nav">
         <Button
           type="primary"
@@ -57,13 +64,9 @@ function App() {
         </Button>
       </div>
       <div className="container">
-        {view === "form" ? (
-          <NIHRForm {...NIHRFormProps} />
-        ) : (
-          <h1>admin view</h1>
-        )}
+        {view === "form" ? <FormView {...NIHRFormProps} /> : <AdminView />}
       </div>
-    </>
+    </Provider>
   );
 }
 

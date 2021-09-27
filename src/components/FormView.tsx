@@ -4,12 +4,12 @@ import { questions } from "../constants/form-questions";
 
 const { Title, Paragraph } = Typography;
 
-type NIHRFormProps = {
-  onFinish: (values: any) => void;
+type FormViewProps = {
+  onFinish: (values: formData) => void;
   onFinishFailed: (errorInfo: any) => void;
 };
 
-const NIHRForm: FC<NIHRFormProps> = (props) => {
+const FormView: FC<FormViewProps> = (props) => {
   return (
     <>
       <Title className="header" style={{ fontWeight: 700 }}>
@@ -40,7 +40,7 @@ const NIHRForm: FC<NIHRFormProps> = (props) => {
         </Form.Item>
         <Paragraph>ID Number:</Paragraph>
         <Form.Item
-          name="id"
+          name="patient_id"
           rules={[{ required: true, message: "Your ID is required" }]}
         >
           <Input />
@@ -62,7 +62,7 @@ const NIHRForm: FC<NIHRFormProps> = (props) => {
             </Form.Item>
           </>
         ))}
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item>
           <Button type="primary" htmlType="submit" block>
             Submit
           </Button>
@@ -72,4 +72,4 @@ const NIHRForm: FC<NIHRFormProps> = (props) => {
   );
 };
 
-export default NIHRForm;
+export default FormView;
